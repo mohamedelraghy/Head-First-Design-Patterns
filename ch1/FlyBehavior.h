@@ -9,4 +9,4 @@ public:
     virtual void fly() = 0;
 };
 
-#endif 
+#endif /* #ifndef FLYBEHAVIOR_H */
