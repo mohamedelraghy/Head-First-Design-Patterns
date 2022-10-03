@@ -1,6 +1,7 @@
 #include "MallardDuck.h"
 #include "ModelDuck.h"
 #include "FlyRocketPowered.h"
+#include "DuckCall.h"
 
 #include<iostream>
 #include <memory>
@@ -23,4 +24,10 @@ int main(){
     modelduck.performQuack();
     modelduck.setFlyBehavior(make_unique<FlyRocketPowered>());
     modelduck.performFly();
+
+    cout << "===========" << endl;
+
+    DuckCall hunter;
+    hunter.disply();
+    hunter.performQuack();
 }
