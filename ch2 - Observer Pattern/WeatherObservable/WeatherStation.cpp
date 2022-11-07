@@ -1,8 +1,8 @@
 #include "WeatherData.h"
 #include "CurrentConditionsDisplay.h"
-#include "StatisticsDisplay.h"
-#include "ForcastDisplay.h"
-#include "HeatIndex.h"
+// #include "StatisticsDisplay.h"
+// #include "ForcastDisplay.h"
+// #include "HeatIndex.h"
 
 #include<iostream>
 using namespace std;
@@ -10,9 +10,9 @@ using namespace std;
 int main(){
     auto weatherData = WeatherData();
     auto currentConditionsDisplay = CurrentConditionsDisplay(&weatherData);
-    auto statsDisplay = StatisticsDisplay(&weatherData); 
-	auto forcastDisplay = ForcastDisplay(&weatherData);
-    auto heatIndex = HeatIndex(&weatherData);
+    // auto statsDisplay = StatisticsDisplay(&weatherData); 
+	// auto forcastDisplay = ForcastDisplay(&weatherData);
+    // auto heatIndex = HeatIndex(&weatherData);
    
     weatherData.setMeasurements(80, 65, 30.4f);
     weatherData.setMeasurements(82, 70, 29.2f);

@@ -1,15 +1,47 @@
 #ifndef SUBJECT_H
 #define SUBJECT_H
 
+#include "DataObject.h"
 #include "Observer.h"
+#include <list>
 
 class Subject {
-    public : 
-        virtual ~Subject() = default;
-        virtual void registerObserver(Observer *o) = 0;
-        virtual void removeObserver(Observer *o) = 0;
-		virtual void notifyObservers() = 0;
+	public:
+		Subject() = default;
+		virtual ~Subject() = default;
+		void addObserver(Observer *o) { observers.push_back(o); }
+		void deleteObserver(Observer *o);
+		void notifyObservers(DataObject *arg = nullptr); // using default arg instead of overloading
+	protected:
+		void setChanged() { changed = true; }
+		void clearChanged() { changed = false; }
+		bool hasChanged() { return changed; }
+	private:
+		std::list<Observer *> observers;
+		bool changed = false;
 };
 
+inline
+void
+Subject::deleteObserver(Observer *o)
+{
+	if(!observers.empty()) {
+        for(auto itr = observers.begin();
+        itr != observers.end(); itr++){
+            if(*itr == o) observers.erase(itr);
+        }
+    }
+}
 
-#endif /*#ifndef SUBJECT_H*/
+inline
+void
+Subject::notifyObservers(DataObject *arg)
+{
+	if (changed) {
+		for (const auto &observer : observers)
+			observer->update(this, arg);
+		changed = false;
+	}
+}
+
+#endif /* ifndef SUBJECT_H */
