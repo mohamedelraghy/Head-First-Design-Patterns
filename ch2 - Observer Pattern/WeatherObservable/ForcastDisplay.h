@@ -4,6 +4,9 @@
 #include "Observer.h"
 #include "DisplayElement.h"
 #include "Subject.h"
+#include "DataObject.h"
+#include "WeatherData.h"
+
 
 #include <iostream>
 using namespace std;
@@ -13,22 +16,24 @@ class ForcastDisplay : public Observer, public DisplayElement {
 
     double currentPressure = 29.92f;
     double prePressure = 0.0f;
-    Subject *weatherData = nullptr;
+    Subject *observalbe = nullptr;
 
     public:
         ForcastDisplay() = default;
-        ForcastDisplay(Subject *wd) : weatherData(wd) { weatherData->registerObserver(this); }
+        ForcastDisplay(Subject *sbj) : observalbe(sbj) { observalbe->addObserver(this); }
 
-        void update(double t, double h, double p) override;
+        void update(Subject *sbj, DataObject *arg = nullptr) override;
         void display() const override;
 };
 
 
 inline
-void ForcastDisplay::update(double t, double h, double p) {
-    prePressure = currentPressure;
-    currentPressure = p;
-    display();
+void ForcastDisplay::update(Subject *sbj, [[maybe_unused]] DataObject *arg) {
+	if (auto *wd = dynamic_cast<WeatherData *>(sbj)) { // sbj is not nullptr
+		prePressure = currentPressure;
+		currentPressure =  wd->getPressure();
+		display();
+	}
 }
 
 inline

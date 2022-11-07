@@ -4,6 +4,8 @@
 #include "Observer.h"
 #include "DisplayElement.h"
 #include "Subject.h"
+#include "DataObject.h"
+#include "WeatherData.h"
 
 #include <iostream>
 
@@ -15,15 +17,17 @@ class HeatIndex : public Observer,  public DisplayElement {
     Subject *weatherData;
     
     public:
-        HeatIndex(Subject *wd) : weatherData(wd) { weatherData->registerObserver(this); }
-        void update(double t, double h, double p) override;
-        void display() const override;
+        HeatIndex(Subject *wd) : weatherData(wd) { weatherData->addObserver(this); }
+		void update(Subject *sbj, DataObject *arg) override;
+		void display() const override;
 };
 
 inline
-void HeatIndex::update(double t, double h, [[maybe_unused]] double p){
-    heatIndex = computeHeatIndex(t, h);
-    display();
+void HeatIndex::update(Subject *sbj, [[maybe_unused]] DataObject *arg) {
+	if (auto *wd = dynamic_cast<WeatherData *>(sbj)) { // sbj is not nullptr
+		heatIndex = computeHeatIndex(wd->getTemperature(), wd->getHumidity());
+		display();
+	}
 }
 
 inline

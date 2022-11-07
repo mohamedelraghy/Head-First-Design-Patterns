@@ -4,6 +4,8 @@
 #include "Observer.h"
 #include "DisplayElement.h"
 #include "Subject.h"
+#include "DataObject.h"
+#include "WeatherData.h"
 
 #include <iostream>
 
@@ -16,21 +18,25 @@ class StatisticsDisplay: public Observer, public DisplayElement {
 
     public: 
         StatisticsDisplay() = default;
-		StatisticsDisplay(Subject *wd) : weatherData(wd) { weatherData->registerObserver(this); }
-		void update(double t, double h, double p) override;
+		StatisticsDisplay(Subject *wd) : weatherData(wd) { weatherData->addObserver(this); }
+		void update(Subject *sbj, DataObject *arg) override;
 		void display() const override;
 
 };
 
 inline
-void StatisticsDisplay::update(double t, [[maybe_unused]] double h, [[maybe_unused]] double p) {
-	tempSum += t;
-	++numberOfReadings;
-	if (t < minTemp)
-		minTemp = t;
-	if (t > maxTemp)
-		maxTemp = t;
-	display();
+void StatisticsDisplay::update(Subject *sbj, [[maybe_unused]] DataObject *arg) {
+	
+	if (auto *wd = dynamic_cast<WeatherData *>(sbj)) { // sbj is not nullptr
+		auto temp = wd->getTemperature();
+		tempSum += temp;
+		++numberOfReadings;
+		if (temp < minTemp)
+			minTemp = temp;
+		if (temp > maxTemp)
+			maxTemp = temp;
+		display();
+	}
 }
 
 inline
