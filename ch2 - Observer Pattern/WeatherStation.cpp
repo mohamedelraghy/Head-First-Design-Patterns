@@ -1,5 +1,7 @@
 #include "WeatherData.h"
 #include "CurrentConditionsDisplay.h"
+
+#include "ForcastDisplay.h"
 #include "HeatIndex.h"
 
 #include<iostream>
@@ -9,7 +11,7 @@ int main(){
     auto weatherData = WeatherData();
     auto currentConditionsDisplay = CurrentConditionsDisplay(&weatherData);
     // auto statsDisplay = StatisticsDisplay(&weatherData); 
-	// auto forcastDisplay = ForcastDisplay(&weatherData);
+	auto forcastDisplay = ForcastDisplay(&weatherData);
     auto heatIndex = HeatIndex(&weatherData);
    
     weatherData.setMeasurements(80, 65, 30.4f);
