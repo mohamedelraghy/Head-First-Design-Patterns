@@ -24,12 +24,7 @@ class WeatherData : public Subject{
         void notifyObservers() override; 
 
         void measurementChanged() { notifyObservers(); } 
-        void setMeasurements(const double &temp, const double &h, const double &p) {
-            temperature = temp;
-            humidity = h;
-            pressure = p;
-            measurementChanged();
-        }
+        void setMeasurements(const double &temp, const double &h, const double &p);
 
 };
 
@@ -57,4 +52,4 @@ void WeatherData::setMeasurements(const double &t, const double &h, const double
 	measurementChanged();
 }
 
-#endif #ifndef /*WEATHER_DATA*/
+#endif  /*#ifndef WEATHER_DATA*/
