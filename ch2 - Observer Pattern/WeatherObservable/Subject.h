@@ -1,4 +1,4 @@
-#ifndef SUBJECT_H
+s#ifndef SUBJECT_H
 #define SUBJECT_H
 
 #include "DataObject.h"
@@ -22,9 +22,7 @@ class Subject {
 };
 
 inline
-void
-Subject::deleteObserver(Observer *o)
-{
+void Subject::deleteObserver(Observer *o) {
 	if(!observers.empty()) {
         for(auto itr = observers.begin();
         itr != observers.end(); itr++){
@@ -34,9 +32,7 @@ Subject::deleteObserver(Observer *o)
 }
 
 inline
-void
-Subject::notifyObservers(DataObject *arg)
-{
+void Subject::notifyObservers(DataObject *arg) {
 	if (changed) {
 		for (const auto &observer : observers)
 			observer->update(this, arg);
